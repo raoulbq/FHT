@@ -1,0 +1,36 @@
+# Project: FHT
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = FHT.o lalgebra.o testingstuff.o $(RES)
+LINKOBJ  = FHT.o lalgebra.o testingstuff.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -L"C:/Robgame/fhtFinal" libfftw3-3.dll  
+INCS =  -I"C:/Dev-Cpp/include"  -I"C:/Robgame/fhtFinal" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"C:/Robgame/fhtFinal" 
+BIN  = FHT.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before FHT.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "FHT.exe" $(LIBS)
+
+FHT.o: FHT.c
+	$(CC) -c FHT.c -o FHT.o $(CFLAGS)
+
+lalgebra.o: lalgebra.c
+	$(CC) -c lalgebra.c -o lalgebra.o $(CFLAGS)
+
+testingstuff.o: testingstuff.c
+	$(CC) -c testingstuff.c -o testingstuff.o $(CFLAGS)
