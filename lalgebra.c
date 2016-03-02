@@ -4,6 +4,7 @@
 #include <fftw3.h>
 #include "testingstuff.h"
 #include "lalgebra.h"
+#include "FHT.h"
 
 //****************************************************************************
 //==========================LINEAR ALGEBRA TOOLS==============================

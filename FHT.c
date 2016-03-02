@@ -15,6 +15,7 @@
 
 #include "testingstuff.h"
 #include "lalgebra.h"
+#include "FHT.h"
 
 #define BIGN 128
 #define LITN (BIGN*5)

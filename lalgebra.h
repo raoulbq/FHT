@@ -9,3 +9,9 @@ extern void fourBcirculantSqMatrixMultiply(double* M1, double* M2, int n, double
 extern void getColumnFromSq(double* input, double* output, int whichColumn, int n);
 
 extern void setColumnToSq(double* input, double* output, int whichColumn, int n);
+
+extern void initFastFouriers(int n);
+
+extern void initRns(int n);
+
+extern void destroyFastFouriers(int n);
