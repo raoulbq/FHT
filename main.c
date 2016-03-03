@@ -8,6 +8,7 @@
 
 #include "lalgebra.h"
 #include "fht.h"
+#include "io.h"
 #include "parameters.h"
 
 
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]) {
 
 
   // Load input data
-  oneDFileReader("doc/data.txt", (2*n+1), data);
+  oneDFileReader("data/input.txt", (2*n+1), data);
   memset(diag, 0, sizeof(double) * (2*n+1) * (2*n+1));
   for(i=0; i<=2*n; ++i) {
     diag[(2*n + 1) * i + i] = exp(0 - pow(xk(i), 2) / 2);
@@ -49,8 +50,8 @@ int main(int argc, char *argv[]) {
   // Save output data
   FILE *resultsn;
   FILE *resultsf;
-  resultsn = fopen("doc/resultsn.txt", "wt+");
-  resultsf = fopen("doc/resultsf.txt", "wt+");
+  resultsn = fopen("data/result_n.txt", "wt+");
+  resultsf = fopen("data/result_f.txt", "wt+");
 
   for(i=0; i<N; ++i){
     fancyResult[i] *= (2*BIGC) / n;
