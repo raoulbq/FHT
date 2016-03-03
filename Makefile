@@ -1,9 +1,7 @@
-# Project: FHT
 CC   = gcc
 CFLAGS = -Wall -Werror -pedantic
 
 OBJ  = FHT.o lalgebra.o
-LINKOBJ  = FHT.o lalgebra.o
 LIBS = -lm -lfftw3
 BIN  = FHT
 
@@ -17,11 +15,8 @@ all: FHT
 clean:
 	${RM} $(OBJ) $(BIN)
 
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
 $(BIN): $(OBJ)
-	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
-
-FHT.o: FHT.c
-	$(CC) -c FHT.c -o FHT.o $(CFLAGS)
-
-lalgebra.o: lalgebra.c
-	$(CC) -c lalgebra.c -o lalgebra.o $(CFLAGS)
+	$(CC) $(OBJ) -o $(BIN) $(LIBS)
