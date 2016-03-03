@@ -5,13 +5,9 @@
 //         polynomials which satisfy a 3 term recurrance
 //         from uniformly sampled points.
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <complex.h>
-#include <fftw3.h>
-#include <time.h>
 #include <string.h>
+#include <math.h>
+#include <fftw3.h>
 
 #include "lalgebra.h"
 #include "fht.h"
@@ -60,7 +56,6 @@ void precomputeRnAndStore(int n, int l, double* result) {
   int i;
   double *temp = (double*) fftw_malloc(sizeof(double) * 8*n);
   double *temp2 = (double*) fftw_malloc(sizeof(double) * 8*n);
-
   createAn(n, n/2+l, result);
   for(i=l+n/2-1; i>l; --i) {
     createAn(n, i, temp);
@@ -72,18 +67,20 @@ void precomputeRnAndStore(int n, int l, double* result) {
 }
 
 // Perform a Chebyshev transform in the most naive way possible directly from the data points defined by xl()
-void naiveChebyshev(double *data, fftw_complex *results) {
-  memset(results, 0, sizeof(fftw_complex)*BIGN);
-  fftw_complex Lminus1;
-  fftw_complex Lminus2;
-  fftw_complex curVal;
+void naiveChebyshev(double *data, double *results) {
+  double Lminus1;
+  double Lminus2;
+  double curVal;
   int x, y;
-  for(x=0; x<=2*LITN; ++x) { //for each data point
-    Lminus1 = (double)xk(x) / BIGC;     // x
-    Lminus2 = 2.0*pow(Lminus1, 2) - 1;  // 2*x^2 - 1
-    for(y=0; y<BIGN; ++y) { //go through the n Chebyshev polynomials
+  memset(results, 0, sizeof(double)*BIGN);
+  // For each data point
+  for(x=0; x<=2*LITN; ++x) {
+    Lminus1 = xk(x) / BIGC;
+    Lminus2 = 2.0*pow(Lminus1, 2) - 1.0;
+    // Go through the n Chebyshev polynomials
+    for(y=0; y<BIGN; ++y) {
       curVal = (ALPHA * xk(x) + BETA) * Lminus1 + GAMMA * Lminus2;
-      results[y] += ((fftw_complex)data[x]) * curVal;
+      results[y] += data[x] * curVal;
       Lminus2 = Lminus1;
       Lminus1 = curVal;
     }
@@ -121,53 +118,45 @@ void performTransform(double* Z0, double* Z1, int n, int l, double* result) {
 // Performs a Hermite transform in the most naive way possible directly from the data points given in xl()
 void naiveTransform(double *data, double *results) {
   memset(results, 0, sizeof(double) * BIGN);
-  fftw_complex Lminus1;
-  fftw_complex Lminus2;
-  fftw_complex curVal;
+  double Lminus1;
+  double Lminus2;
+  double curVal;
   int x, y;
-  for(x=0; x<=2*LITN; ++x) {//for each data point
+  // For each data point
+  for(x=0; x<=2*LITN; ++x) {
     Lminus1 = 0;
     curVal = D0;
-    for(y=0; y<BIGN; ++y) {//go through the n hermites
-      results[y] += (data[x]) * curVal;
+    // Go through the Hermite polynomials
+    for(y=0; y<BIGN; ++y) {
+      results[y] += data[x] * curVal;
       Lminus2 = Lminus1;
       Lminus1 = curVal;
-      curVal = (AL(y) * (xk(x)) + BL(y)) * Lminus1 + CL(y) * Lminus2;
+      curVal = (AL(y) * xk(x) + BL(y)) * Lminus1 + CL(y) * Lminus2;
     }
   }
 }
 
 void oneDTransform(double *data, double* result) {
   int i;
-  int n = BIGN;
-  fftw_complex *Z0 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * 2*n);
-  fftw_complex *Z1 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * 2*n);
-  double *dblZ0 = (double*) fftw_malloc(sizeof(fftw_complex) * 2*n);
-  double *dblZ1 = (double*) fftw_malloc(sizeof(fftw_complex) * 2*n);
+  double *Z0 = (double*) fftw_malloc(sizeof(double) * 2*BIGN);
+  double *Z1 = (double*) fftw_malloc(sizeof(double) * 2*BIGN);
 
-  // Do a chebyshev Transform
-  naiveChebyshev(data, Z0+n-1);
-  Z0[2*n - 1] = 0;
-
-  // We only want the real parts
-  for(i=0; i<n; ++i) {
-    dblZ0[n-1+i] = creal(Z0[n-1+i]);
-  }
+  // Do a Chebyshev Transform
+  naiveChebyshev(data, Z0+BIGN-1);
+  Z0[2*BIGN - 1] = 0;
 
   // Expand the data
-  for(i=0; i<n; ++i)
-    dblZ0[i] = dblZ0[2*n-i-2];
+  for(i=0; i<BIGN; ++i)
+    Z0[i] = Z0[2*BIGN-i-2];
 
   // Find the next data point
-  calculateFirstZ(dblZ0, dblZ1, 2*n);
+  calculateFirstZ(Z0, Z1, 2*BIGN);
 
   // Do the second part
-  performTransform(dblZ0, dblZ1, n, 1, result);
+  performTransform(Z0, Z1, BIGN, 1, result);
 
   fftw_free(Z0);
-  fftw_free(dblZ0);
   fftw_free(Z1);
-  fftw_free(dblZ1);
 }
 
 void twoDTransform(double *data, int n, double* result) {
