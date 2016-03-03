@@ -9,5 +9,5 @@ The algorithm used is a modifcation of the 1995 work
 *Fast Discrete Polynomial Transforms with Applications to Data Analysis for distance transitive graphs*
 by Driscoll, Healy, and Rockmore.
 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2630232/
-http://www.cs.dartmouth.edu/~rockmore/FHT.htm
+* https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2630232/
+* http://www.cs.dartmouth.edu/~rockmore/FHT.htm
