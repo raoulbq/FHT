@@ -1,9 +1,9 @@
 # Project: FHT
 CC   = gcc
-CFLAGS =
+CFLAGS = -Wall -Werror -pedantic
 
-OBJ  = FHT.o lalgebra.o testingstuff.o
-LINKOBJ  = FHT.o lalgebra.o testingstuff.o
+OBJ  = FHT.o lalgebra.o
+LINKOBJ  = FHT.o lalgebra.o
 LIBS = -lm -lfftw3
 BIN  = FHT
 
@@ -25,6 +25,3 @@ FHT.o: FHT.c
 
 lalgebra.o: lalgebra.c
 	$(CC) -c lalgebra.c -o lalgebra.o $(CFLAGS)
-
-testingstuff.o: testingstuff.c
-	$(CC) -c testingstuff.c -o testingstuff.o $(CFLAGS)

@@ -1,17 +1,13 @@
-//give me the first column of a circulant matrix in M.
-extern void circulantVcMatrixMultiply(double* c, double* VecCpy, int n, double* result);
+#ifndef LALGEBRA_H
+#define LALGEBRA_H
 
-//multiply Z by the Rn that was precomputed at n,l
-extern void preFourBcirculantVcMatrixMultiply(int n, int l, double* Vec, double* result);
+void getColumnFromSq(double* input, double* output, int whichColumn, int n);
+void setColumnToSq(double* input, double* output, int whichColumn, int n);
+void initFastFouriers(int n);
+void destroyFastFouriers(int n);
+void initRns(int n);
+void fourBcirculantSqMatrixMultiply(double* M1, double* M2, int n, double* result);
+void circulantVcMatrixMultiply(double* c, double* VecCpy, int n, double* result);
+void preFourBcirculantVcMatrixMultiply(int n, int l, double* Vec, double* result);
 
-extern void fourBcirculantSqMatrixMultiply(double* M1, double* M2, int n, double* result);
-
-extern void getColumnFromSq(double* input, double* output, int whichColumn, int n);
-
-extern void setColumnToSq(double* input, double* output, int whichColumn, int n);
-
-extern void initFastFouriers(int n);
-
-extern void initRns(int n);
-
-extern void destroyFastFouriers(int n);
+#endif
