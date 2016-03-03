@@ -18,17 +18,14 @@ int main(int argc, char *argv[]) {
   int N = BIGN;
   int i;
   double *data = (double*) fftw_malloc(sizeof(double) * (2*n+1));
-  double *diag = (double*) fftw_malloc(sizeof(double) * (2*n+1) * (2*n+1));
   double *naiveResult = (double*) fftw_malloc(sizeof(double) * N);
   double *fancyResult = (double*) fftw_malloc(sizeof(double) * N);
 
 
   // Load input data
   oneDFileReader("data/input.txt", (2*n+1), data);
-  memset(diag, 0, sizeof(double) * (2*n+1) * (2*n+1));
   for(i=0; i<=2*n; ++i) {
-    diag[(2*n + 1) * i + i] = exp(0 - pow(xk(i), 2) / 2);
-    data[i] *= diag[(2*n + 1) * i + i];
+    data[i] *= exp(0 - pow(xk(i), 2) / 2);
   }
 
 
