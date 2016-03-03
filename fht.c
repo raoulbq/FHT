@@ -14,7 +14,7 @@
 #include <string.h>
 
 #include "lalgebra.h"
-#include "FHT.h"
+#include "fht.h"
 #include "parameters.h"
 
 

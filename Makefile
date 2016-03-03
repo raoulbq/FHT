@@ -1,16 +1,16 @@
 CC   = gcc
 CFLAGS = -Wall -Werror -pedantic
 
-OBJ  = FHT.o lalgebra.o
+OBJ  = fht.o lalgebra.o
 LIBS = -lm -lfftw3
-BIN  = FHT
+BIN  = fht
 
 RM = rm -f
 
 
 .PHONY: all clean
 
-all: FHT
+all: fht
 
 clean:
 	${RM} $(OBJ) $(BIN)

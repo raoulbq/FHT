@@ -4,7 +4,7 @@
 #include <fftw3.h>
 
 #include "lalgebra.h"
-#include "FHT.h"
+#include "fht.h"
 
 
 fftw_plan *daPlans;
