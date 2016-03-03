@@ -3,6 +3,7 @@
 
 #include <fftw3.h>
 
+double xk(int k);
 void oneDFileReader(char *filename, int n, double *result);
 void twoDFileReader(char *filename, int n, double *result);
 void calculateFirstZ(double *Z0, double *Z1, int n);

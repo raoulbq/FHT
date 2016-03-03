@@ -1,7 +1,7 @@
 CC   = gcc
 CFLAGS = -Wall -Werror -pedantic
 
-OBJ  = fht.o lalgebra.o
+OBJ  = fht.o lalgebra.o main.o
 LIBS = -lm -lfftw3
 BIN  = fht
 
