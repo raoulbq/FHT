@@ -7,7 +7,8 @@
 #define BIGN 128
 
 // Number of data points
-#define LITN (BIGN*5)
+#define BIGM 5
+#define LITN (BIGM * BIGN)
 
 // Location of the turning point
 #define BIGC sqrt(2.0*BIGN + 1.0)
@@ -34,8 +35,12 @@
 #define CL(l) (-sqrt(l / (l + 1.0)))
 
 // Define ul, vl and wl
+// See equation 2.21 and 2.22 in [1]
 #define UL(l) (AL(l) / ALPHA)
 #define VL(l) (BL(l) - BETA * UL(l))
 #define WL(l) (- GAMMA * UL(l))
 
 #endif
+
+// [1] 'Fast discrete polynomial transforms with applications to data analysis for distance transitive graphs'
+//     by JR Driscoll, D Healy and D Rockmore, SIAM J Comput. 1997, 26(4) 1066-1099.
